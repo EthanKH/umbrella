@@ -1,8 +1,8 @@
 pp "Hello, World!"
 
 pp "What's your location?"
-# user_location = gets.chomp
-user_location = "Chicago"
+user_location = gets.chomp.gsub(" ", "%20")
+# user_location = "Chicago"
 
 pp user_location
 
@@ -17,7 +17,18 @@ require "json"
 
 parsed_response = JSON.parse(raw_response)
 
-pp parsed_response.keys
+results = parsed_response.fetch("results")
+first_results = results.at(0)
+
+geo = first_results.fetch("geometry")
+loc = geo.fetch("location")
+
+latitude = loc.fetch("lat")
+longitude = loc.fetch("lng")
+
+pp latitude
+pp longitude
+
 
 # # I've already created a string variable above: pirate_weather_api_key
 # # It contains sensitive credentials that hackers would love to steal so it is hidden for security reasons.
